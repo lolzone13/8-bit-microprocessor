@@ -1,0 +1,2 @@
+
+`define MEMORY_ADDRESS_WIDTH 4
