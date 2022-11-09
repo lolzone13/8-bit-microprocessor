@@ -11,7 +11,7 @@ module program_counter_tb;
 
     initial begin
         clk=0;
-        forever #5 clk = ~clk;
+        forever #20 clk = ~clk;
 
     end
 
