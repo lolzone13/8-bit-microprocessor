@@ -23,7 +23,7 @@ module alu_tb;
   end
 
   initial begin
-    $monitor("time = %2d, A = %d, B = %d, SUM = %b, zero_flag = %b, carry_flag = %b", $time,in_a, in_b, sum, fz, fc);
+    $monitor("time = %2d, A = %d, B = %d, SUM = %b, zero_flag = %b, carry_flag = %b", $time, in_a, in_b, sum, fz, fc);
   end
 
 endmodule

@@ -1,5 +1,5 @@
 build:
-	iverilog -o alu alu.v alu_tb.v
+	iverilog -o alu alu.v alu_tb.v && vvp alu
 
 run:
 	build

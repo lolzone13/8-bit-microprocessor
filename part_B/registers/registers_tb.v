@@ -1,13 +1,13 @@
 module memory_tb;
 
-  reg [3:0] address_bus;
-  wire [7:0] data_bus_out;
-  wire [7:0] data_bus_in;
+    wire clk,
+    wire register_enable,
+    wire read_write,
+    wire [1:0] register_select,
+    wire [7:0] data_bus_in,
+    wire [7:0] data_bus_out
 
-  reg mem_enable;
-  reg clk;
-  reg read_write;
-  reg [7:0] temp_reg;
+
   memory memory (address_bus, clk, mem_enable, read_write, data_bus_in, data_bus_out);
 
   assign data_bus_in = temp_reg;

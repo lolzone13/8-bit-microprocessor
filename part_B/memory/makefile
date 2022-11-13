@@ -1,5 +1,5 @@
 build:
-	iverilog -o memory memory.v memory_tb.v
+	iverilog -o memory memory.v memory_tb.v && vvp memory
 
 run:
 	build
