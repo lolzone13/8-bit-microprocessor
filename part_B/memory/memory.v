@@ -18,11 +18,11 @@ always @(posedge clk) begin
             1'b1: begin 
                 temp_reg = memory_store[address_bus];     // read;
 
-                $display("READ   - Address=%d, Register_contents: %d", address_bus, memory_store[address_bus]);
+                $display("READ   - Address=%d, Memory_contents: %d", address_bus, memory_store[address_bus]);
             end
             1'b0: begin 
                 memory_store[address_bus] = data_bus_in;     // write
-                $display("WRITE   - Address=%d, Register_contents: %d", address_bus, memory_store[address_bus]);
+                $display("WRITE   - Address=%d, Memory_contents: %d", address_bus, memory_store[address_bus]);
             end
             default: ;
         endcase
