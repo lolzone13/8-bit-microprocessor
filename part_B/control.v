@@ -1,10 +1,10 @@
-module control(
-    input clk,
-    input wire [7:0] instruction,
-    output reg alu_enable, mem_enable, mem_rw, reg_enable,reg_rw,direct_imm,
-    output reg [2:0] alu_mode,  
-    output reg [1:0] rs_sel,rd_sel
-);
+module control;
+    // input clk,
+    // input wire [7:0] instruction,
+    // output reg alu_enable, mem_enable, mem_rw, reg_enable,reg_rw,direct_imm,
+    // output reg [2:0] alu_mode,  
+    // output reg [1:0] rs_sel,rd_sel
+// );
 `define OP_LD  4'b0000
 `define OP_ST  4'b0001
 `define OP_MR  4'b0011
@@ -22,37 +22,39 @@ module control(
 `define OP_CM  4'b0111
 `define OP_CMI 4'b1111
 
+    // opcode decoding
     reg [3:0] opcode;
-    initial begin
-            opcode = instruction[7:4];
-            alu_enable =1'b0;
-            mem_enable =1'b0;
-            reg_enable = 1'b0;
-            mem_rw=1'b0;
-            reg_rw=1'b0;
-            direct_imm=1'b0;
+    reg [7:0] instruction;
+    reg clk;
+    reg [7:0] immediate_input;
+    main main(clk, opcode, immediate_input);
 
+    
+
+
+    initial begin
+        instruction = 8'b1100_0110;
+        opcode = instruction[7:4];
+        
+        forever #20 clk=~clk;
     end
-    always@(*)
-    begin
-        case(opcode)
-            `OP_SUM : begin
-                alu_enable = 1'b1;
-                reg_enable = 1'b1;
-                reg_rw= 1'b1;
-                direct_imm= 1'b1;
-                rd_sel = instruction[3:2];
-                rs_sel = instruction[1:0];
+
+    initial begin
+        #50
+        case (opcode)
+            `OP_LD : begin
+                immediate_input[3:0] = instruction[3:0];
+                immediate_input[7:4] = (immediate_input[3]) ? 4'b1111 : 4'b0000;
             end
-            `OP_SMI : begin
-                alu_enable = 1'b1;
-                reg_enable = 1'b1;
-                reg_rw= 1'b1;
-                direct_imm= 1'b0;
-                rd_sel = instruction[3:2];
-                rs_sel = instruction[1:0];
-            end
-    endcase
+             `OP_SMI: begin
+                immediate_input[1:0] = instruction[1:0];
+                immediate_input[7:2] = (immediate_input[1]) ? 6'b111111 : 6'b000000;
+             end
+        endcase
+
+        $display("Input - %d", immediate_input);
     end
+    
+
 
 endmodule

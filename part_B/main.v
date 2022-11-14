@@ -1,4 +1,8 @@
-module main;
+module main(
+    input clk,
+    input [3:0] instruction,
+    input [7:0] immediate_input
+);
 
 `define OP_LD  4'b0000
 `define OP_ST  4'b0001
@@ -21,45 +25,47 @@ module main;
     reg [1:0] register_select;
     reg mem_enable;
     reg alu_enable;
-    reg clk;
     reg [7:0] data_bus_in;
     wire [7:0] data_bus_out;
     wire carry_flag;
     wire zero_flag;
     wire [7:0] sum;
-    reg [7:0] immediate_input;
+
     reg [2:0] mode;
     reg [3:0] address_bus;
     reg read_write;
 
-    reg [3:0] instruction;
     // sum rd rs
     registers registers (register_select, clk, mem_enable, read_write, data_bus_in, data_bus_out);
 
     alu alu (alu_enable ,clk, mode, immediate_input, data_bus_out, sum, zero_flag, carry_flag);
 
 
-    initial begin
-        // opcode = instruction[7:4];
-        //mem_enable=0;
-        clk=0;
-        //read_write=1; // 1 for read
-        //address_bus=4'b0000;
-        //alu_enable=0;
-        instruction=`OP_ANI;
-        //data_bus_in=8'b0000_0000;
-        immediate_input=8'b0000_0111;
-        forever #20 clk=~clk;
-    end
 
-    initial begin
+    // initial begin
+    //     // opcode = instruction[7:4];
+    //     //mem_enable=0;
+    //     //clk=0;
+    //     //read_write=1; // 1 for read
+    //     //address_bus=4'b0000;
+    //     //alu_enable=0;
+    //     //instruction=`OP_SMI;
+    //     //data_bus_in=8'b0000_0000;
+    //     //immediate_input=8'b0000_0111;
+    //     //forever #20 clk=~clk;
+    // end
+
+    always @(posedge clk) begin
+        
+    
         case(instruction)
             `OP_SMI: begin                
-            
+                $display("Entered Adder Block");
                 #10 mem_enable=1; read_write=0; register_select=2'b00; alu_enable=0; data_bus_in=8'b0010_1001; mode=3'b000;
                 #40 read_write=1; register_select=2'b00; alu_enable=1;
                 #40 mem_enable=0;
                 #40 alu_enable=0;
+                $display("Entered Adder Block");
                 #40 mem_enable=1; read_write=0; register_select=2'b01; data_bus_in=sum;
                 #40 read_write=1; register_select=2'b01;
                 #40 mem_enable=0;
@@ -126,7 +132,7 @@ module main;
     // end
     initial begin
 
-        $monitor("time = %2d, A = %d, data_bus_out = %d, SUM = %b, zero_flag = %b, carry_flag = %b", $time, immediate_input, data_bus_out, sum, zero_flag, carry_flag);
+        $monitor("time = %2d, instruction = %b, A = %d, data_bus_out = %d, SUM = %b, zero_flag = %b, carry_flag = %b", $time, instruction, immediate_input, data_bus_out, sum, zero_flag, carry_flag);
     end
 
 
