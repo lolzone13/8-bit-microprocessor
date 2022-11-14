@@ -8,12 +8,12 @@ module memory_tb;
     wire [7:0] data_bus_out
 
 
-  memory memory (address_bus, clk, mem_enable, read_write, data_bus_in, data_bus_out);
+  register register (address_bus, clk, mem_enable, read_write, data_bus_in, data_bus_out);
 
   assign data_bus_in = temp_reg;
 
   initial begin
-    mem_enable=0;
+    register_enable=0;
     clk=0;
     read_write=1;
     address_bus=4'b0000;

@@ -18,7 +18,7 @@ module alu_tb;
     forever #20 clk=~clk;
   end
   initial begin
-    #5 mode = 3'b111;
+    #5 mode = 3'b000;
     #5 in_a = 8'b0000_0101; in_b = 8'b0000_1101;
   end
 

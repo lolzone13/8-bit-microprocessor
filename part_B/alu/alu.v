@@ -43,7 +43,7 @@ module alu(
         `ALU_XOR: buf_out = in_a ^ in_b;
         default:  buf_out = 'hxx;
       endcase
-
+      $display("Operation Complete!");
       flag_zero = (buf_out == 0 || temp_reg == 0) ? 1 : 0;
 
     end
