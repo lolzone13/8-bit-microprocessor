@@ -22,7 +22,7 @@ module alu(
   reg [N-1:0] temp_reg;
 
   initial begin
-    #300
+
     flag_carry = 0;
     flag_zero = 0;
     temp_reg = 0;
