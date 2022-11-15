@@ -26,12 +26,13 @@ module alu(
     flag_carry = 0;
     flag_zero = 0;
     temp_reg = 0;
-
+    $display("Entered ALU");
 
   end
 
   always @(posedge clk) begin
     if (enable) begin
+      $display("Mode Check");
       case (mode)
         `ALU_ADD: {flag_carry, buf_out} = in_a + in_b;
         `ALU_CMP: {flag_carry, temp_reg} = in_a - in_b;
